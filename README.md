@@ -36,18 +36,12 @@
 
 ## 🚀 Getting Started
 
-### Prerequisites
-- Node.js 18+ and npm/yarn
-- Next.js 14+
-- React 18+
-- Tailwind CSS 3+
-
 ### Installation
 
 1. **Clone the repository**
    ```bash
    git clone https://github.com/Ajay-Krishna00/Clarity
-   cd clarity-mental-health
+   cd Clarity
    ```
 
 2. **Install dependencies**
@@ -100,4 +94,4 @@ Content-Type: application/json
 ```
 ---
 
-**Built with ❤️ for the students of Jammu & Kashmir as part of Smart India Hackathon 2025**
+**Built with ❤️ for the students by students as part of Smart India Hackathon 2025**
