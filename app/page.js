@@ -76,6 +76,7 @@ export default function Home() {
             <a href="#features" className="text-gray-700 hover:text-indigo-600 transition">Features</a>
             <a href="#about" className="text-gray-700 hover:text-indigo-600 transition">About</a>
             <a href="#testimonials" className="text-gray-700 hover:text-indigo-600 transition">Reviews</a>
+            <a href="/signin" className="text-gray-700 hover:text-indigo-600 transition">Sign In</a>
             <a href="/chat" className="bg-indigo-600 text-white px-4 py-2 rounded-lg hover:bg-indigo-700 transition">
               Get Support
             </a>
@@ -97,6 +98,7 @@ export default function Home() {
               <a href="#features" className="block text-gray-700 hover:text-indigo-600 transition">Features</a>
               <a href="#about" className="block text-gray-700 hover:text-indigo-600 transition">About</a>
               <a href="#testimonials" className="block text-gray-700 hover:text-indigo-600 transition">Reviews</a>
+              <a href="/signin" className="block text-gray-700 hover:text-indigo-600 transition">Sign In</a>
               <a href="/chat" className="block bg-indigo-600 text-white px-4 py-2 rounded-lg hover:bg-indigo-700 transition text-center">
                 Get Support
               </a>
