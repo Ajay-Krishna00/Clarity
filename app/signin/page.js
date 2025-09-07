@@ -13,10 +13,24 @@ export default function SigninPage() {
 
   const handleSignin = async (e) => {
     e.preventDefault();
-    const { error } = await supabase.auth.signInWithPassword({ email, password });
-
+    const { error } = await supabase.auth.signInWithPassword({
+      email,
+      password,
+    });
     if (error) {
       setMessage(error.message);
+      return;
+    }
+    const {
+      data: { user },
+    } = await supabase.auth.getUser();
+    const { data, error: profileError } = await supabase
+      .from("admin_applications")
+      .select("*")
+      .eq("user_id", user.id)
+      .single();
+    if (data && data.id_card_path == null) {
+      router.push("/upload-id");
     } else {
       router.push("/chat");
     }
@@ -25,7 +39,9 @@ export default function SigninPage() {
   return (
     <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50 px-6">
       <div className="w-full max-w-md bg-white/80 backdrop-blur-lg rounded-2xl shadow-lg p-8">
-        <h1 className="text-3xl font-bold text-gray-900 text-center mb-6">Sign In</h1>
+        <h1 className="text-3xl font-bold text-gray-900 text-center mb-6">
+          Sign In
+        </h1>
 
         <form onSubmit={handleSignin} className="space-y-4">
           <div className="flex items-center border rounded-lg px-3">
@@ -60,11 +76,16 @@ export default function SigninPage() {
           </button>
         </form>
 
-        {message && <p className="text-red-500 text-sm mt-4 text-center">{message}</p>}
+        {message && (
+          <p className="text-red-500 text-sm mt-4 text-center">{message}</p>
+        )}
 
         <p className="text-gray-600 text-center mt-6">
           Don’t have an account?{" "}
-          <Link href="/signup" className="text-indigo-600 font-semibold hover:underline">
+          <Link
+            href="/signup"
+            className="text-indigo-600 font-semibold hover:underline"
+          >
             Sign Up
           </Link>
         </p>
