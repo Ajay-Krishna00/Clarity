@@ -16,6 +16,7 @@ import {
   ChevronRight,
   Tag,
 } from "lucide-react";
+import Link from "next/link";
 
 const ResourcesPage = () => {
   const [searchTerm, setSearchTerm] = useState("");
@@ -195,7 +196,7 @@ const ResourcesPage = () => {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 py-4">
           <div className="flex items-center justify-between">
             <div className="flex items-center">
-              <a
+              <Link
                 href="/"
                 className="mr-4 p-2 hover:bg-gray-100 rounded-full transition-colors"
               >
@@ -203,7 +204,7 @@ const ResourcesPage = () => {
                   size={20}
                   className="text-gray-600 hover:text-gray-800"
                 />
-              </a>
+              </Link>
 
               <div className="w-12 h-12 bg-gradient-to-r from-indigo-600 to-purple-600 rounded-full flex items-center justify-center mr-4">
                 <BookOpen className="w-6 h-6 text-white" />
@@ -478,9 +479,9 @@ const ResourcesPage = () => {
               Need Immediate Support?
             </h3>
             <p className="text-gray-600 mb-6 max-w-2xl mx-auto">
-              If you're experiencing a mental health crisis or need immediate
-              assistance, please don't hesitate to reach out for professional
-              help.
+              If you&apos;re experiencing a mental health crisis or need
+              immediate assistance, please don&apos;t hesitate to reach out for
+              professional help.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <a

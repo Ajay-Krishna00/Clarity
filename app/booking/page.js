@@ -16,6 +16,7 @@ import {
   Award,
   Languages,
 } from "lucide-react";
+import Link from "next/link";
 
 const BookingPage = () => {
   const [step, setStep] = useState(1);
@@ -190,7 +191,7 @@ const BookingPage = () => {
             Booking Confirmed!
           </h1>
           <p className="text-gray-600 mb-6">
-            Your counseling session has been scheduled. You'll receive a
+            Your counseling session has been scheduled. You&apos;ll receive a
             confirmation email with session details and joining instructions.
           </p>
 
@@ -212,18 +213,18 @@ const BookingPage = () => {
           </div>
 
           <div className="flex flex-col gap-3">
-            <a
+            <Link
               href="/chat"
               className="bg-gradient-to-r from-indigo-600 to-purple-600 text-white py-3 px-6 rounded-xl hover:from-indigo-700 hover:to-purple-700 transition-all duration-300"
             >
               Continue to Chat Support
-            </a>
-            <a
+            </Link>
+            <Link
               href="/"
               className="text-indigo-600 hover:text-indigo-700 font-medium"
             >
               Return to Home
-            </a>
+            </Link>
           </div>
         </div>
       </div>
@@ -237,7 +238,7 @@ const BookingPage = () => {
         <div className="max-w-6xl mx-auto px-4 sm:px-6 py-4">
           <div className="flex items-center justify-between">
             <div className="flex items-center">
-              <a
+              <Link
                 href="/"
                 className="mr-4 p-2 hover:bg-gray-100 rounded-full transition-colors"
               >
@@ -245,7 +246,7 @@ const BookingPage = () => {
                   size={20}
                   className="text-gray-600 hover:text-gray-800"
                 />
-              </a>
+              </Link>
 
               <div className="w-12 h-12 bg-gradient-to-r from-indigo-600 to-purple-600 rounded-full flex items-center justify-center mr-4">
                 <Calendar className="w-6 h-6 text-white" />
@@ -691,7 +692,7 @@ const BookingPage = () => {
                       Yes, but it was mixed experience
                     </option>
                     <option value="yes-unhelpful">
-                      Yes, but it wasn't helpful
+                      Yes, but it wasn&apos;t helpful
                     </option>
                   </select>
                 </div>

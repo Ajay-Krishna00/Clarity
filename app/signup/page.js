@@ -203,8 +203,8 @@ export default function SignupPage() {
               </span>
             </label>
             <p className="text-sm text-gray-600 mt-2">
-              Note: Only one admin is allowed per institution. You'll need to
-              upload your ID card after email verification.
+              Note: Only one admin is allowed per institution. You&apos;ll need
+              to upload your ID card after email verification.
             </p>
           </div>
 
@@ -326,9 +326,9 @@ export default function SignupPage() {
 
               <div className="bg-blue-50 border border-blue-200 rounded-lg p-3">
                 <p className="text-sm text-blue-800">
-                  <strong>Next Step:</strong> After email verification, you'll
-                  be redirected to upload your ID card/teaching certificate for
-                  manual verification.
+                  <strong>Next Step:</strong> After email verification,
+                  you&apos;ll be redirected to upload your ID card/teaching
+                  certificate for manual verification.
                 </p>
               </div>
             </div>

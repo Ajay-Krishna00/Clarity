@@ -10,6 +10,7 @@ import {
   Minimize2,
   Maximize2,
 } from "lucide-react";
+import Link from "next/link";
 
 export default function ChatPage() {
   const router = useRouter();
@@ -110,7 +111,7 @@ export default function ChatPage() {
       <div className="bg-white shadow-sm border-b border-gray-200">
         <div className="flex items-center justify-between px-4 sm:px-6 py-4">
           <div className="flex items-center">
-            <a
+            <Link
               href="/"
               className="mr-3 p-2 hover:bg-gray-100 rounded-full transition-colors"
             >
@@ -118,7 +119,7 @@ export default function ChatPage() {
                 size={20}
                 className="text-gray-600 hover:text-gray-800"
               />
-            </a>
+            </Link>
 
             <div className="w-12 h-12 bg-gradient-to-r from-indigo-600 to-purple-600 rounded-full flex items-center justify-center mr-3">
               <Heart className="w-6 h-6 text-white" />

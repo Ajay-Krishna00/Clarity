@@ -14,6 +14,9 @@ const geistMono = Geist_Mono({
 export const metadata = {
   title: "Clarity",
   description: "An AI companion for mental wellness",
+  icons: {
+    icon: "/favicon1.ico",
+  },
 };
 
 export default function RootLayout({ children }) {

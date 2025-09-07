@@ -132,22 +132,21 @@ export default function Home() {
             >
               Reviews
             </a>
-            {
-              loggedIn == false ?
-            <a
-              href="/signin"
-              className="text-gray-700 hover:text-indigo-600 transition"
-            >
-              Sign In
-                </a>
-                :
-            <button
-              onClick={handleSignOut}
-              className="text-gray-700 hover:text-indigo-600 transition"
-            >
-              Sign Out
+            {loggedIn == false ? (
+              <a
+                href="/signin"
+                className="text-gray-700 hover:text-indigo-600 transition"
+              >
+                Sign In
+              </a>
+            ) : (
+              <button
+                onClick={handleSignOut}
+                className="text-gray-700 hover:text-indigo-600 transition"
+              >
+                Sign Out
               </button>
-            }
+            )}
             <a
               href="/chat"
               className="bg-indigo-600 text-white px-3 py-2 rounded-lg hover:bg-indigo-700 transition"
@@ -197,23 +196,21 @@ export default function Home() {
               >
                 Reviews
               </a>
-              {
-                loggedIn == false ?
-              <a
-                href="/signin"
-                className="block text-gray-700 hover:text-indigo-600 transition"
-                  >
-                    Sign In
-              </a>
-                  :
-                  
-            <button
-              onClick={handleSignOut}
-              className="text-gray-700 hover:text-indigo-600 transition"
-            >
-              Sign Out
-              </button>
-            }             
+              {loggedIn == false ? (
+                <a
+                  href="/signin"
+                  className="block text-gray-700 hover:text-indigo-600 transition"
+                >
+                  Sign In
+                </a>
+              ) : (
+                <button
+                  onClick={handleSignOut}
+                  className="text-gray-700 hover:text-indigo-600 transition"
+                >
+                  Sign Out
+                </button>
+              )}
               <a
                 href="/chat"
                 className="block bg-indigo-600 text-white px-4 py-2 rounded-lg hover:bg-indigo-700 transition text-center"
@@ -426,7 +423,7 @@ export default function Home() {
                   ))}
                 </div>
                 <p className="text-gray-700 mb-6 leading-relaxed">
-                  "{testimonial.text}"
+                  &quot;{testimonial.text}&quot;
                 </p>
                 <div>
                   <div className="font-semibold text-gray-900">
@@ -449,8 +446,8 @@ export default function Home() {
             Ready to Take the First Step?
           </h2>
           <p className="text-xl text-indigo-100 mb-12 max-w-2xl mx-auto">
-            Your mental health journey starts with a single conversation. We're
-            here to support you every step of the way.
+            Your mental health journey starts with a single conversation.
+            We&quot;re here to support you every step of the way.
           </p>
 
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
@@ -512,7 +509,7 @@ export default function Home() {
             <div>
               <h4 className="text-lg font-semibold mb-4">Emergency</h4>
               <p className="text-gray-400 text-sm mb-2">
-                If you're in crisis, please contact:
+                If you&quot;re in crisis, please contact:
               </p>
               <p className="text-white font-semibold">
                 14416 - Tele MANAS Mental Health Support

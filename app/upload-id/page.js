@@ -250,8 +250,8 @@ export default function AdminUploadPage() {
             <p className="text-sm text-blue-800">
               <strong>Verification Process:</strong> Our team will manually
               verify your credentials and get back to you within 24 hours.
-              You'll receive an email notification once your admin access is
-              approved.
+              You&apos;ll receive an email notification once your admin access
+              is approved.
             </p>
           </div>
         </div>
