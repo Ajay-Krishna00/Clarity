@@ -148,6 +148,12 @@ export default function Home() {
               </button>
             )}
             <a
+            href="/peers"
+            className="bg-indigo-600 text-white px-3 py-2 rounded-lg hover:bg-indigo-700 transition"
+            >
+            Peer Support
+            </a>
+            <a
               href="/chat"
               className="bg-indigo-600 text-white px-3 py-2 rounded-lg hover:bg-indigo-700 transition"
             >
@@ -211,6 +217,12 @@ export default function Home() {
                   Sign Out
                 </button>
               )}
+              <a
+              href="/peers"
+              className="block bg-indigo-600 text-white px-4 py-2 rounded-lg hover:bg-indigo-700 transition text-center"
+              >
+              Peer Support
+              </a>
               <a
                 href="/chat"
                 className="block bg-indigo-600 text-white px-4 py-2 rounded-lg hover:bg-indigo-700 transition text-center"
