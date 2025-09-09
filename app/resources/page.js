@@ -26,12 +26,14 @@ const ResourcesPage = () => {
   const [loading, setLoading] = useState(true);
 
   const categories = [
-    { id: "all", name: "All Resources", count: 45 },
-    { id: "anxiety", name: "Anxiety & Stress", count: 12 },
-    { id: "depression", name: "Depression", count: 8 },
-    { id: "academic", name: "Academic Pressure", count: 10 },
-    { id: "relationships", name: "Relationships", count: 7 },
-    { id: "sleep", name: "Sleep & Wellness", count: 8 },
+    { id: "all", name: "All Resources", count: 16 },
+    { id: "anxiety", name: "Anxiety & Stress", count: 6 },
+    { id: "depression", name: "Depression", count: 1 },
+    { id: "academic", name: "Academic Pressure", count: 4 },
+    { id: "relationships", name: "Relationships", count: 1 },
+    { id: "sleep", name: "Sleep & Wellness", count: 2 },
+    { id: "nutrition", name: "Nutrition & Mental Health", count: 1 },
+    { id: "wellbeing", name: "Wellbeing & Lifestyle", count: 1 },
   ];
 
   const formats = [
@@ -58,6 +60,7 @@ const ResourcesPage = () => {
       featured: true,
       thumbnail: "/api/placeholder/300/200",
       author: "Dr. Priya Sharma, Clinical Psychologist",
+      link: "https://www.place2be.org.uk/media/j4kjdblk/navigating-exam-season-guide-for-students.pdf",
     },
     {
       id: 2,
@@ -73,6 +76,7 @@ const ResourcesPage = () => {
       featured: true,
       thumbnail: "/api/placeholder/300/200",
       author: "Meditation Center, Kashmir University",
+      link: "https://www.youtube.com/watch?v=inpok4MKVLM",
     },
     {
       id: 3,
@@ -88,6 +92,7 @@ const ResourcesPage = () => {
       featured: false,
       thumbnail: "/api/placeholder/300/200",
       author: "J&K Health Department",
+      link: "https://www.sleepfoundation.org/sleep-hygiene",
     },
     {
       id: 4,
@@ -102,7 +107,8 @@ const ResourcesPage = () => {
       tags: ["depression", "mental-health", "support"],
       featured: false,
       thumbnail: "/api/placeholder/300/200",
-      author: "Regional Mental Health Board",
+      author: "New York State Office of Mental Health",
+      link: "https://omh.ny.gov/omhweb/booklets/depression.pdf",
     },
     {
       id: 5,
@@ -110,7 +116,7 @@ const ResourcesPage = () => {
       description:
         "Navigate friendships, romantic relationships, and family dynamics while managing academic life. Communication and boundary-setting tips.",
       category: "relationships",
-      format: "video",
+      format: "pdf",
       duration: "18 min",
       downloads: 523,
       rating: 4.5,
@@ -118,6 +124,7 @@ const ResourcesPage = () => {
       featured: false,
       thumbnail: "/api/placeholder/300/200",
       author: "Student Counseling Services",
+      link: "https://ung.edu/student-counseling/_uploads/files/healthy-relationships.pdf",
     },
     {
       id: 6,
@@ -133,6 +140,169 @@ const ResourcesPage = () => {
       featured: true,
       thumbnail: "/api/placeholder/300/200",
       author: "Mindfulness Institute, Jammu",
+      link: "https://www.youtube.com/watch?v=aNXKjGFUlMs",
+    },
+
+    // 10 new items (all featured: false) - verified
+    {
+      id: 7,
+      title: "Time Management for Students (Quick Guide)",
+      description:
+        "Practical steps to plan your week, beat overload, and protect study focus.",
+      category: "academic",
+      format: "pdf",
+      duration: "10 min read",
+      downloads: 912,
+      rating: 4.7,
+      tags: ["time-management", "planning", "study-habits"],
+      featured: false,
+      thumbnail: "/api/placeholder/300/200",
+      author: "University of Northern Colorado - Academic Success",
+      link: "https://www.unco.edu/student-academic-success/academic-success/academic-success-resources/pdf/SAS_time_management.pdf",
+    },
+    {
+      id: 8,
+      title: "Test Anxiety: Quick Tips for Students",
+      description:
+        "Evidence-based strategies to calm nerves before and during exams.",
+      category: "anxiety",
+      format: "pdf",
+      duration: "8 min read",
+      downloads: 788,
+      rating: 4.7,
+      tags: ["anxiety", "exams", "coping"],
+      featured: false,
+      thumbnail: "/api/placeholder/300/200",
+      author: "UHCL Counseling & Mental Health Center",
+      link: "https://www.uhcl.edu/cmhc/resources/documents/handouts/test-anxiety.pdf",
+    },
+    {
+      id: 9,
+      title: "Doing What Matters in Times of Stress (Workbook)",
+      description:
+        "WHO’s illustrated, step-by-step stress management guide with downloadable exercises and audio.",
+      category: "anxiety",
+      format: "pdf",
+      duration: "45 min read",
+      downloads: 1322,
+      rating: 4.8,
+      tags: ["stress", "coping", "workbook"],
+      featured: false,
+      thumbnail: "/api/placeholder/300/200",
+      author: "World Health Organization",
+      link: "https://www.who.int/publications-detail-redirect/9789240003927",
+    },
+    {
+      id: 10,
+      title: "Perfectionism in Perspective — Module 1",
+      description:
+        "Understand perfectionism traps and learn balanced goal-setting.",
+      category: "academic",
+      format: "pdf",
+      duration: "20 min read",
+      downloads: 674,
+      rating: 4.6,
+      tags: ["perfectionism", "mindset", "productivity"],
+      featured: false,
+      thumbnail: "/api/placeholder/300/200",
+      author: "Centre for Clinical Interventions (WA)",
+      link: "https://www.cci.health.wa.gov.au/-/media/CCI/Consumer-Modules/Perfectionism-in-Perspective/Perfectionism-in-Perspective---01---What-is-Perfectionism.pdf",
+    },
+    {
+      id: 11,
+      title: "Procrastination: Why We Delay & How to Start",
+      description:
+        "Concise handout with cognitive and behavioral tools to overcome procrastination.",
+      category: "academic",
+      format: "pdf",
+      duration: "10 min read",
+      downloads: 845,
+      rating: 4.7,
+      tags: ["procrastination", "activation", "study-habits"],
+      featured: false,
+      thumbnail: "/api/placeholder/300/200",
+      author: "UNH Psychological & Counseling Services",
+      link: "https://www.unh.edu/pacs/sites/default/files/media/2020-07/procrastination-handout.pdf",
+    },
+    {
+      id: 12,
+      title: "Mindful Check-In (Guided Audio)",
+      description:
+        "A short guided practice to pause, notice, and reset—great between study blocks.",
+      category: "anxiety",
+      format: "audio",
+      duration: "6 min",
+      downloads: 1102,
+      rating: 4.8,
+      tags: ["mindfulness", "reset", "focus"],
+      featured: false,
+      thumbnail: "/api/placeholder/300/200",
+      author: "Mindfulness Studies (GROW Meditations)",
+      link: "https://www.mindfulnessstudies.com/wp-content/uploads/2019/09/Mindful-Check-In-1.mp3",
+    },
+    {
+      id: 13,
+      title: "Your Guide to Healthy Sleep",
+      description:
+        "NHLBI booklet on sleep basics, common issues, and actionable tips.",
+      category: "sleep",
+      format: "pdf",
+      duration: "30 min read",
+      downloads: 973,
+      rating: 4.7,
+      tags: ["sleep", "health", "routine"],
+      featured: false,
+      thumbnail: "/api/placeholder/300/200",
+      author: "NHLBI, National Institutes of Health",
+      link: "https://www.nhlbi.nih.gov/files/docs/public/sleep/healthy_sleep.pdf",
+    },
+    {
+      id: 14,
+      title: "Food and Mood: How Diet Affects Mental Health",
+      description:
+        "Student-friendly guide on stabilizing energy and mood with everyday food choices.",
+      category: "nutrition",
+      format: "article",
+      duration: "12 min read",
+      downloads: 651,
+      rating: 4.6,
+      tags: ["nutrition", "mood", "wellbeing"],
+      featured: false,
+      thumbnail: "/api/placeholder/300/200",
+      author: "Mind (UK)",
+      link: "https://www.mind.org.uk/information-support/tips-for-everyday-living/food-and-mental-health/",
+    },
+    {
+      id: 15,
+      title: "Physical Activity & Mental Health (What You Need to Know)",
+      description:
+        "Clear, evidence-based overview of how moving your body supports mood and focus.",
+      category: "wellbeing",
+      format: "article",
+      duration: "8 min read",
+      downloads: 702,
+      rating: 4.6,
+      tags: ["exercise", "mental-health", "energy"],
+      featured: false,
+      thumbnail: "/api/placeholder/300/200",
+      author: "Centers for Disease Control and Prevention (CDC)",
+      link: "https://www.cdc.gov/physical-activity-basics/benefits/index.html",
+    },
+    {
+      id: 16,
+      title: "5–4–3–2–1 Grounding Technique",
+      description:
+        "Fast, practical grounding method for anxious moments you can use anywhere.",
+      category: "anxiety",
+      format: "pdf",
+      duration: "5 min read",
+      downloads: 989,
+      rating: 4.7,
+      tags: ["grounding", "anxiety", "quick-relief"],
+      featured: false,
+      thumbnail: "/api/placeholder/300/200",
+      author: "Boys & Girls Clubs / practical handout",
+      link: "https://www.bgcmd.org/wp-content/uploads/2020/03/Grounding-Exercise.pdf",
     },
   ];
 
@@ -345,7 +515,10 @@ const ResourcesPage = () => {
                     </p>
 
                     {/* Action Button */}
-                    <button className="w-full bg-gradient-to-r from-indigo-600 to-purple-600 text-white py-3 rounded-xl hover:from-indigo-700 hover:to-purple-700 transition-all duration-300 flex items-center justify-center font-medium">
+                    <button
+                      className="w-full bg-gradient-to-r from-indigo-600 to-purple-600 text-white py-3 rounded-xl hover:from-indigo-700 hover:to-purple-700 transition-all duration-300 flex items-center justify-center font-medium"
+                      onClick={() => window.open(resource.link, "_blank")}
+                    >
                       <BookOpen className="w-4 h-4 mr-2" />
                       Access Resource
                       <ChevronRight className="w-4 h-4 ml-2" />
@@ -436,7 +609,10 @@ const ResourcesPage = () => {
                     </div>
 
                     {/* Action Button */}
-                    <button className="w-full bg-white border border-indigo-200 text-indigo-600 py-2 rounded-lg hover:bg-indigo-50 transition-colors flex items-center justify-center text-sm font-medium">
+                    <button
+                      className="w-full bg-white border border-indigo-200 text-indigo-600 py-2 rounded-lg hover:bg-indigo-50 transition-colors flex items-center justify-center text-sm font-medium"
+                      onClick={() => window.open(resource.link, "_blank")}
+                    >
                       <Eye className="w-4 h-4 mr-1" />
                       View Resource
                     </button>
