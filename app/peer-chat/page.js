@@ -1,6 +1,6 @@
 "use client";
 import { supabase } from "@/lib/supabaseClient";
-import { useEffect, useState, useRef } from "react";
+import { useEffect, useState, useRef, Suspense } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { io } from "socket.io-client";
 import {
@@ -13,7 +13,7 @@ import {
 } from "lucide-react";
 import Link from "next/link";
 
-export default function PeerChatPage() {
+function PeerChatContent() {
   const router = useRouter();
   const searchParams = useSearchParams();
 
@@ -535,5 +535,23 @@ export default function PeerChatPage() {
         </div>
       )}
     </div>
+  );
+}
+
+// Wrap with Suspense for useSearchParams
+export default function PeerChatPage() {
+  return (
+    <Suspense
+      fallback={
+        <div className="flex h-screen items-center justify-center bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50">
+          <div className="text-center">
+            <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-teal-500 mx-auto mb-4"></div>
+            <p className="text-gray-600">Loading chat...</p>
+          </div>
+        </div>
+      }
+    >
+      <PeerChatContent />
+    </Suspense>
   );
 }
