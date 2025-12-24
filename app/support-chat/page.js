@@ -58,7 +58,10 @@ export default function ChatPage() {
         body: JSON.stringify({ message: messagesToSend, userId: user?.id }),
       });
 
-      if (!res.ok) throw new Error(`HTTP error! status: ${res.status}`);
+      if (!res.ok)
+        throw new Error(
+          `HTTP error! status: ${res.status},${await res.text()}`,
+        );
 
       const data = await res.json();
       setMessages((prev) => [...prev, [data.reply, "model"]]);

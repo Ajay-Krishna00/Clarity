@@ -130,7 +130,7 @@ export default function AdminUploadPage() {
       localStorage.removeItem("pendingAdminUpload");
 
       setTimeout(() => {
-        router.push("/chat");
+        router.push("/support-chat");
       }, 3000);
     } catch (error) {
       console.error("Error uploading document:", error);

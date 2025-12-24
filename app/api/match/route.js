@@ -1,11 +1,15 @@
-import { supabase } from "@/lib/supabaseClient";
 import { getUser } from "@/lib/getUser";
+import { createSupabaseServerClient } from "@/lib/supabaseserver";
 
-export async function GET() {
-  const user = await getUser();
+export async function GET(req) {
+  const user = await getUser(req);
   if (!user) {
-    return new Response(JSON.stringify({ error: "Not authenticated" }), { status: 401 });
+    return new Response(JSON.stringify({ error: "Not authenticated" }), {
+      status: 401,
+    });
   }
+
+  const supabase = await createSupabaseServerClient();
 
   // Get current user’s interests
   const { data: myInterests, error: myError } = await supabase
@@ -14,7 +18,9 @@ export async function GET() {
     .eq("user_id", user.id);
 
   if (myError) {
-    return new Response(JSON.stringify({ error: myError.message }), { status: 400 });
+    return new Response(JSON.stringify({ error: myError.message }), {
+      status: 400,
+    });
   }
 
   if (!myInterests?.length) {
@@ -31,7 +37,9 @@ export async function GET() {
     .neq("user_id", user.id);
 
   if (matchError) {
-    return new Response(JSON.stringify({ error: matchError.message }), { status: 400 });
+    return new Response(JSON.stringify({ error: matchError.message }), {
+      status: 400,
+    });
   }
 
   return new Response(JSON.stringify(matches), { status: 200 });

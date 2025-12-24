@@ -32,7 +32,7 @@ export default function SigninPage() {
     if (data && data.id_card_path == null) {
       router.push("/upload-id");
     } else {
-      router.push("/chat");
+      router.push("/support-chat");
     }
   };
 
