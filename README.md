@@ -38,6 +38,23 @@
 - Anonymous usage options
 - HIPAA-compliant data handling
 
+### 👥 Peer-to-Peer Support
+
+- **Real-time peer chat** with WebSocket-powered messaging
+- **Interest-based matching** to connect with peers who share similar experiences
+- **Online status indicators** showing when peers are available
+- **Typing indicators** for a responsive chat experience
+- **Message persistence** with chat history stored in Supabase
+- **WhatsApp-style recent chats** showing latest conversations with timestamps
+
+### 🔗 WebSocket Features
+
+- Real-time bidirectional communication using Socket.IO
+- JWT-based authentication for secure connections
+- Automatic reconnection handling
+- Multi-tab support with proper session management
+- User presence tracking (online/offline status)
+
 ## 🚀 Getting Started
 
 ### Installation
@@ -85,8 +102,20 @@
    npm run dev
    ```
 
-5. **Open your browser**
+5. **Start the WebSocket server**
+
+   ```bash
+   cd backend
+   npm install
+   node index.js
+   ```
+
+6. **Open your browser**
    Navigate to [http://localhost:3000](http://localhost:3000)
+
+## 🗄️ Database Setup
+
+See [`db/schema.sql`](./db/schema.sql) for full database schema.
 
 ## 🛠️ API Endpoints
 
@@ -99,6 +128,56 @@ Content-Type: application/json
   "message": [["user_message", "user"], ["previous_message", "model"]]
 }
 ```
+
+### WebSocket Events
+
+| Event | Direction | Description |
+|-------|-----------|-------------|
+| `joinChat` | Client → Server | Join a chat room with another user |
+| `joinedChat` | Server → Client | Confirmation with chatId |
+| `sendMessage` | Client → Server | Send a message to chat room |
+| `receiveMessage` | Server → Client | Receive a message from peer |
+| `typing` | Client → Server | Notify peer that user is typing |
+| `peerTyping` | Server → Client | Peer started typing |
+| `stopTyping` | Client → Server | User stopped typing |
+| `peerStoppedTyping` | Server → Client | Peer stopped typing |
+| `userOnline` | Server → Client | User came online |
+| `userOffline` | Server → Client | User went offline |
+
+## 📁 Project Structure
+
+```
+clarity/
+├── app/
+│   ├── api/              # API routes
+│   │   ├── chatbot/      # AI chat endpoint
+│   │   ├── interests/    # Interests management
+│   │   ├── match/        # Peer matching
+│   │   └── ...
+│   ├── peer-chat/        # Real-time peer chat page
+│   ├── peers/            # Peer discovery & matching
+│   ├── support-chat/     # AI support chat
+│   └── ...
+├── backend/
+│   └── index.js          # WebSocket server (Socket.IO)
+├── components/
+│   └── recentChat.js     # WhatsApp-style chat list
+├── lib/
+│   ├── supabaseClient.js # Supabase client config
+│   └── ...
+└── ...
+```
+
+---
+
+## 🧰 Tech Stack
+
+- **Frontend:** Next.js 14, React, Tailwind CSS
+- **Backend:** Node.js, Express, Socket.IO
+- **Database:** Supabase (PostgreSQL)
+- **Authentication:** Supabase Auth with JWT
+- **AI:** Google Gemini API
+- **Real-time:** WebSockets via Socket.IO
 
 ---
 
