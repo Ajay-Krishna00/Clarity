@@ -57,7 +57,7 @@ const ResourcesPage = () => {
       downloads: 1234,
       rating: 4.8,
       tags: ["stress", "exams", "study-tips"],
-      featured: true,
+      featured: false,
       thumbnail: "/api/placeholder/300/200",
       author: "Dr. Priya Sharma, Clinical Psychologist",
       link: "https://www.place2be.org.uk/media/j4kjdblk/navigating-exam-season-guide-for-students.pdf",
@@ -105,7 +105,7 @@ const ResourcesPage = () => {
       downloads: 645,
       rating: 4.6,
       tags: ["depression", "mental-health", "support"],
-      featured: false,
+      featured: true,
       thumbnail: "/api/placeholder/300/200",
       author: "New York State Office of Mental Health",
       link: "https://omh.ny.gov/omhweb/booklets/depression.pdf",
@@ -661,7 +661,7 @@ const ResourcesPage = () => {
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <a
-                href="/chat"
+                href="/support-chat"
                 className="bg-gradient-to-r from-indigo-600 to-purple-600 text-white px-6 py-3 rounded-xl hover:from-indigo-700 hover:to-purple-700 transition-all duration-300"
               >
                 Start Chat Support

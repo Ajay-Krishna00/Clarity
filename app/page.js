@@ -54,7 +54,7 @@ export default function Home() {
       title: "24/7 AI Chat Support",
       description:
         "Get immediate, confidential support whenever you need it. Our AI companion is trained to provide empathetic guidance.",
-      href: "/chat",
+      href: "/support-chat",
     },
     {
       icon: <BookOpen className="w-6 h-6" />,
@@ -148,7 +148,13 @@ export default function Home() {
               </button>
             )}
             <a
-              href="/chat"
+              href="/peers"
+              className="bg-indigo-600 text-white px-3 py-2 rounded-lg hover:bg-indigo-700 transition"
+            >
+              Peer Support
+            </a>
+            <a
+              href="/support-chat"
               className="bg-indigo-600 text-white px-3 py-2 rounded-lg hover:bg-indigo-700 transition"
             >
               Get Support
@@ -212,7 +218,13 @@ export default function Home() {
                 </button>
               )}
               <a
-                href="/chat"
+                href="/peers"
+                className="block bg-indigo-600 text-white px-4 py-2 rounded-lg hover:bg-indigo-700 transition text-center"
+              >
+                Peer Support
+              </a>
+              <a
+                href="/support-chat"
                 className="block bg-indigo-600 text-white px-4 py-2 rounded-lg hover:bg-indigo-700 transition text-center"
               >
                 Get Support
@@ -269,7 +281,7 @@ export default function Home() {
 
           <div className="flex flex-col sm:flex-row gap-4 justify-center items-center mb-16">
             <a
-              href="/chat"
+              href="/support-chat"
               className="group bg-gradient-to-r from-indigo-600 to-purple-600 text-white px-8 py-4 rounded-xl font-semibold text-lg hover:shadow-2xl hover:scale-105 transition-all duration-300 flex items-center"
             >
               Start Chatting Now
@@ -452,7 +464,7 @@ export default function Home() {
 
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <a
-              href="/chat"
+              href="/support-chat"
               className="bg-white text-indigo-600 px-8 py-4 rounded-xl font-semibold text-lg hover:shadow-2xl hover:scale-105 transition-all duration-300 flex items-center justify-center"
             >
               <MessageCircle className="w-5 h-5 mr-2" />
@@ -489,7 +501,10 @@ export default function Home() {
               <h4 className="text-lg font-semibold mb-4">Support</h4>
               <ul className="space-y-2 text-gray-400">
                 <li>
-                  <a href="/chat" className="hover:text-white transition">
+                  <a
+                    href="/support-chat"
+                    className="hover:text-white transition"
+                  >
                     Chat Support
                   </a>
                 </li>
