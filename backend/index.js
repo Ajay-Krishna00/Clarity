@@ -11,7 +11,8 @@ const server = http.createServer(app);
 
 const io = new Server(server, {
   cors: {
-    origin: "*",
+    origin: process.env.FRONTEND_URL || "http://localhost:3000",
+    methods: ["GET", "POST"],
   },
 });
 
@@ -60,9 +61,6 @@ io.on("connection", (socket) => {
       io.emit("userOffline", { userId });
     });
 
-    console.log("Connected:", userId, socket.id);
-    console.log("CurrentMap:", userSockets);
-
     socket.on("sendMessage", ({ chatId, text }) => {
       if (!chatId || !text) return;
       const senderId = socket.data.userId;
@@ -82,7 +80,6 @@ io.on("connection", (socket) => {
       socket.emit("joinedChat", { chatId });
     });
 
-    // 🔤 Typing indicators
     socket.on("typing", ({ chatId }) => {
       if (!chatId) return;
       const userId = socket.data.userId;
@@ -121,6 +118,9 @@ function removeSocketFromUserMap(socket) {
     userSockets.delete(userId);
   }
 }
+function getChatId(userA, userB) {
+  return [userA, userB].sort().join(":");
+}
 
 function emitToUser(userId, event, payload) {
   const socketSet = userSockets.get(userId);
@@ -128,9 +128,6 @@ function emitToUser(userId, event, payload) {
   socketSet.forEach((socketId) => {
     io.to(socketId).emit(event, payload);
   });
-}
-function getChatId(userA, userB) {
-  return [userA, userB].sort().join(":");
 }
 
 app.get("/", (req, res) => {

@@ -123,6 +123,7 @@ function PeerChatContent() {
     if (!authReady || !authToken || !peerId) return;
 
     const socket = io("https://clarity-r77f.onrender.com", {
+    // const socket = io("http://localhost:4000", {
       auth: { token: authToken },
     });
     socketRef.current = socket;

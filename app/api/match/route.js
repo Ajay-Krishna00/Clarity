@@ -35,12 +35,25 @@ export async function GET(req) {
     .select("user_id, interests(name)")
     .in("interest_id", interestIds)
     .neq("user_id", user.id);
-
-  if (matchError) {
-    return new Response(JSON.stringify({ error: matchError.message }), {
-      status: 400,
-    });
-  }
-
-  return new Response(JSON.stringify(matches), { status: 200 });
+    if (matchError) {
+      return new Response(JSON.stringify({ error: matchError.message }), {
+        status: 400,
+      });
+    }
+  
+  const matchMap = matches.reduce((acc, curr) => {
+    {
+      //reduce() - it rolls through the array, collecting and building something bigger!
+      //acc-	Accumulator - the object we're building up
+      //curr-	Current item being processed
+    if (!acc[curr.user_id]) {
+      acc[curr.user_id] = { user_id: curr.user_id, interests: [] };
+    }
+    acc[curr.user_id].interests.push(curr.interests.name);
+    return acc;
+  }}, {});
+  
+  const uniqueMatches = Object.values(matchMap);
+  
+  return new Response(JSON.stringify(uniqueMatches), { status: 200 });
 }

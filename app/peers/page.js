@@ -248,8 +248,8 @@ export default function PeerSupportPage() {
               <ul className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                 {matches.map((m, idx) => {
                   const interestNames = Array.isArray(m.interests)
-                    ? m.interests.map((i) => i.name).join(", ")
-                    : (m.interests?.name ?? "");
+                    ? m.interests.map((i) => i).join(", ")
+                    : (m.interests ?? "");
                   return (
                     <div
                       className="flex p-4 bg-gray-100 rounded-lg border border-gray-200 justify-between items-center"
