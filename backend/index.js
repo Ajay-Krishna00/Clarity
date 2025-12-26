@@ -60,7 +60,7 @@ io.on("connection", (socket) => {
       io.emit("userOffline", { userId });
     });
 
-    socket.on("sendMessage", ({ chatId, text }) => {
+    socket.on("sendMessage", ({ chatId, text, messageId }) => {
       if (!chatId || !text) return;
       const senderId = socket.data.userId;
       console.log(`Message in ${chatId} from ${senderId}: ${text}`);
@@ -68,6 +68,8 @@ io.on("connection", (socket) => {
         chatId,
         senderId,
         text,
+        messageId,
+        timestamp: new Date().toISOString(),
       });
     });
     socket.on("joinChat", ({ otherUserId }) => {
@@ -90,6 +92,22 @@ io.on("connection", (socket) => {
       if (!chatId) return;
       const userId = socket.data.userId;
       socket.to(chatId).emit("peerStoppedTyping", { chatId, userId });
+    });
+
+    // Handle marking messages as read (supports single or multiple messages)
+    socket.on("markAsRead", ({ chatId, messageId, messageIds }) => {
+      if (!chatId) return;
+      const userId = socket.data.userId;
+      const readAt = new Date().toISOString();
+      // Support both single messageId and array of messageIds
+      const ids = messageIds || (messageId ? [messageId] : []);
+      if (ids.length === 0) return;
+      socket.to(chatId).emit("messagesRead", { 
+        chatId, 
+        messageIds: ids, 
+        readBy: userId,
+        readAt
+      });
     });
   } catch (err) {
     console.log("❌ Invalid token:", err.message);

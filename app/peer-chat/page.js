@@ -33,10 +33,11 @@ function PeerChatContent() {
   const [peerOnline, setPeerOnline] = useState(false);
   const [peerTyping, setPeerTyping] = useState(false);
   const [connected, setConnected] = useState(false);
+  const [readReceipts, setReadReceipts] = useState({}); 
 
-  const messagesEndRef = useRef(null);
-  const socketRef = useRef(null);
-  const typingTimeoutRef = useRef(null);
+  const messagesEndRef = useRef(null);// For auto-scrolling to latest message
+  const socketRef = useRef(null); // Holds the socket instance
+  const typingTimeoutRef = useRef(null); //Debounces "stop typing" events
 
   // Auth setup - get session and user
   useEffect(() => {
@@ -81,7 +82,7 @@ function PeerChatContent() {
     };
   }, [router]);
 
-  // 📜 Load previous messages from Supabase
+  // Load previous messages from Supabase
   useEffect(() => {
     if (!user?.id || !peerId) return;
 
@@ -103,12 +104,26 @@ function PeerChatContent() {
 
         if (messages && messages.length > 0) {
           const formattedMessages = messages.map((msg) => ({
+            id: msg.id,
             text: msg.text || msg.content,
             senderId: msg.sender_id,
             isOwn: msg.sender_id === user.id,
             timestamp: msg.created_at,
+            read_at: msg.read_at,
           }));
           setMessages(formattedMessages);
+          
+          // Also load read receipts for own messages that have been read
+          const readOwnMessages = messages.filter(m => m.sender_id === user.id && m.read_at);
+          if (readOwnMessages.length > 0) {
+            setReadReceipts(prev => {
+              const updated = { ...prev };
+              readOwnMessages.forEach(m => {
+                updated[m.id] = m.read_at;
+              });
+              return updated;
+            });
+          }
         }
       } catch (err) {
         console.error("Failed to load messages:", err);
@@ -118,12 +133,12 @@ function PeerChatContent() {
     loadMessages();
   }, [user?.id, peerId]);
 
-  // 🔌 Socket connection and event handlers
+  // Socket connection and event handlers
   useEffect(() => {
     if (!authReady || !authToken || !peerId) return;
 
     // const socket = io("http://localhost:4000", {
-      const socket = io("https://clarity-r77f.onrender.com", {
+    const socket = io("https://clarity-r77f.onrender.com", {
       auth: { token: authToken },
     });
     socketRef.current = socket;
@@ -146,13 +161,14 @@ function PeerChatContent() {
     // Receive messages from the peer (only add if not from self - avoid duplicates)
     socket.on(
       "receiveMessage",
-      ({ chatId: msgChatId, senderId, text, timestamp }) => {
+      ({ chatId: msgChatId, senderId, text, timestamp, messageId }) => {
         if (senderId === user?.id) return; // Skip own messages (already added optimistically)
 
         console.log("📩 Received message:", { senderId, text });
         setMessages((prev) => [
           ...prev,
           {
+            id: messageId,
             text,
             senderId,
             isOwn: false,
@@ -190,6 +206,20 @@ function PeerChatContent() {
       }
     });
 
+    // when peer reads our messages
+    socket.on("messagesRead", ({ chatId: readChatId, messageIds, readBy, readAt }) => {
+      if (readBy === peerId) {
+        console.log(`📖 Peer read ${messageIds.length} message(s)`);
+        setReadReceipts((prev) => {
+          const updated = { ...prev };
+          messageIds.forEach((id) => {
+            updated[id] = readAt;
+          });
+          return updated;
+        });
+      }
+    });
+
     // Handle disconnection
     socket.on("disconnect", () => {
       console.log("🔴 Disconnected from socket");
@@ -203,26 +233,52 @@ function PeerChatContent() {
     };
   }, [authReady, authToken, peerId, user?.id]);
 
-  // 🔽 Auto scroll to bottom when messages change
+  // Mark messages as read when viewing the chat
+  useEffect(() => {
+    if (!chatId || !socketRef.current || !user?.id) return;
+    // Find unread messages from the peer (not our own messages)
+    const unreadMessageIds = messages
+      .filter(msg => !msg.isOwn && !msg.read_at && msg.id)
+      .map(msg => msg.id);
+    if (unreadMessageIds.length === 0) return;
+    socketRef.current.emit("markAsRead", { chatId, messageIds: unreadMessageIds });
+    supabase
+      .from("messages")
+      .update({ read_at: new Date().toISOString() })
+      .in("id", unreadMessageIds)
+      .eq("receiver_id", user.id)
+      .then(() => {
+        // Update local state to mark as read
+        setMessages(prev => prev.map(msg => 
+          unreadMessageIds.includes(msg.id) 
+            ? { ...msg, read_at: new Date().toISOString() }
+            : msg
+        ));
+      });
+  }, [chatId, messages, user?.id]);
+
+  // Auto scroll to bottom when messages change
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
   };
   useEffect(scrollToBottom, [messages]);
 
-  // 📨 Send message via WebSocket
+  // Send message via WebSocket
   const handleSend = async () => {
     if (!inputValue.trim() || !chatId || !socketRef.current) return;
 
     const text = inputValue.trim();
     const timestamp = new Date().toISOString();
+    const messageId = crypto.randomUUID(); // Generate unique ID for this message
 
     // Emit message to server
-    socketRef.current.emit("sendMessage", { chatId, text, receiverId: peerId });
+    socketRef.current.emit("sendMessage", { chatId, text, receiverId: peerId, messageId });
 
     // Add message to local state immediately (optimistic update)
     setMessages((prev) => [
       ...prev,
       {
+        id: messageId,
         text,
         senderId: user?.id,
         isOwn: true,
@@ -235,9 +291,10 @@ function PeerChatContent() {
     // Stop typing indicator
     socketRef.current.emit("stopTyping", { chatId });
 
-    // Save message to Supabase
+    // Save message to Supabase with the same ID
     try {
       await supabase.from("messages").insert({
+        id: messageId,
         sender_id: user?.id,
         receiver_id: peerId,
         text,
@@ -249,7 +306,7 @@ function PeerChatContent() {
     }
   };
 
-  // ⌨️ Handle input change with typing indicator
+  // Handle input change with typing indicator
   const handleInputChange = (e) => {
     setInputValue(e.target.value);
 
@@ -267,7 +324,7 @@ function PeerChatContent() {
     }, 1000);
   };
 
-  // ⏎ Handle Enter key
+  // Handle Enter key
   const handleKeyPress = (e) => {
     if (e.key === "Enter" && !e.shiftKey) {
       e.preventDefault();
@@ -427,16 +484,27 @@ function PeerChatContent() {
                       <p className="whitespace-pre-wrap leading-relaxed">
                         {msg.text}
                       </p>
-                      <span
-                        className={`text-xs mt-1 block ${
-                          msg.isOwn ? "text-indigo-200" : "text-gray-400"
-                        }`}
-                      >
-                        {new Date(msg.timestamp).toLocaleTimeString([], {
-                          hour: "2-digit",
-                          minute: "2-digit",
-                        })}
-                      </span>
+                      <div className="flex items-center justify-between mt-1">
+                        <span
+                          className={`text-xs ${
+                            msg.isOwn ? "text-indigo-200" : "text-gray-400"
+                          }`}
+                        >
+                          {new Date(msg.timestamp).toLocaleTimeString([], {
+                            hour: "2-digit",
+                            minute: "2-digit",
+                          })}
+                        </span>
+                        {msg.isOwn && (
+                          <span className="text-xs ml-2">
+                            {readReceipts[msg.id] || msg.read_at ? (
+                              <span className="text-green-300 font-bold" title="Read">✓✓</span>
+                            ) : (
+                              <span className="text-white font-bold" title="Sent">✓</span>
+                            )}
+                          </span>
+                        )}
+                      </div>
                     </div>
                   </div>
                 </div>

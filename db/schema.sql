@@ -40,6 +40,7 @@ CREATE TABLE public.messages (
   chat_id text NOT NULL,
   text text NOT NULL,
   created_at timestamp with time zone DEFAULT now(),
+  read_at timestamp with time zone DEFAULT NULL,
   CONSTRAINT messages_pkey PRIMARY KEY (id)
 );
 CREATE TABLE public.user_interests (
